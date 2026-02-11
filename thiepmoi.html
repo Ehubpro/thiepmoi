@@ -1,0 +1,220 @@
+import React, { useState, useEffect } from 'react';
+import { Heart, MapPin, Clock, Calendar, Sparkles, UtensilsCrossed, ChevronRight, Stars, Shirt, Flower, Gift } from 'lucide-react';
+
+const App = () => {
+  const [mounted, setMounted] = useState(false);
+  const [step, setStep] = useState(0); // 0: Intro, 1: Dress Code, 2: Food, 3: Final Card
+  const [choice, setChoice] = useState(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const locations = {
+    superFull: {
+      name: "Sen Tây Hồ",
+      address: "614 Lạc Long Quân, Tây Hồ",
+      desc: "Một hành trình ẩm thực phong phú và thịnh soạn, để chúng mình cùng tận hưởng những hương vị ngọt ngào nhất trong sự ấm áp và no nê hạnh phúc."
+    },
+    justEnough: {
+      name: "LAVIE Coffee & Dining",
+      address: "76 P. Quảng An, Tây Hồ, Hà Nội",
+      desc: "Nơi sự tinh tế và không gian nghệ thuật giao thoa. Một buổi tối nhẹ nhàng, vừa đủ để cảm xúc lắng đọng và những câu chuyện tình yêu thêm phần sâu sắc."
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center p-4 font-serif text-[#fff5d6]">
+      {/* Background Lighting & Effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(212,175,55,0.15)_0%,_rgba(10,10,10,1)_70%)]"></div>
+        
+        {[...Array(40)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute animate-pulse"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              color: '#D4AF37',
+              opacity: 0.4,
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          >
+            {i % 2 === 0 ? <Sparkles size={Math.random() * 15 + 8} /> : <Stars size={Math.random() * 10 + 5} />}
+          </div>
+        ))}
+      </div>
+
+      <div className={`max-w-md w-full relative transition-all duration-1000 transform ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        
+        {/* Step 0: Welcome Intro */}
+        {step === 0 && (
+          <div className="relative bg-[#111111] border border-[#D4AF37]/50 rounded-2xl overflow-hidden shadow-[0_0_60px_rgba(212,175,55,0.2)] p-10 text-center backdrop-blur-sm animate-in fade-in duration-1000">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#f7e4a1] to-transparent"></div>
+            
+            <div className="mb-8 space-y-6">
+              <div className="flex justify-center mb-2">
+                <div className="relative">
+                   <Heart className="text-[#f7e4a1] fill-[#D4AF37] animate-ping absolute inset-0 opacity-20" size={48} />
+                   <Heart className="text-[#f7e4a1] fill-[#D4AF37] relative" size={48} />
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <h3 className="text-[#D4AF37] text-xs uppercase tracking-[0.5em] font-bold">Thân gửi</h3>
+                <h2 className="text-3xl font-bold text-white tracking-widest">Phương Nga</h2>
+              </div>
+
+              <div className="space-y-4 py-4">
+                <p className="text-[#f7e4a1]/90 italic leading-relaxed text-lg">
+                  "Chào người con gái anh yêu nhất.<br/>Valentine này, anh có một điều bất ngờ nho nhỏ dành riêng cho em..."
+                </p>
+                <p className="text-[#f7e4a1]/50 text-sm font-light">
+                  Hãy cùng anh lên kế hoạch cho buổi tối lãng mạn của đôi mình nhé?
+                </p>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => setStep(1)}
+              className="group relative px-10 py-4 bg-transparent border-2 border-[#D4AF37] text-[#D4AF37] rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_0_20px_rgba(212,175,55,0.4)]"
+            >
+              <span className="relative z-10 flex items-center gap-2 font-bold uppercase tracking-[0.2em]">
+                Mở thiệp mời <Gift size={18} />
+              </span>
+              <div className="absolute inset-0 bg-[#D4AF37] translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+              <style>{`.group:hover span { color: #111; }`}</style>
+            </button>
+          </div>
+        )}
+
+        {/* Step 1: Dress Code Selection */}
+        {step === 1 && (
+          <div className="relative bg-[#111111] border border-[#D4AF37]/50 rounded-2xl overflow-hidden shadow-[0_0_60px_rgba(212,175,55,0.2)] p-10 text-center backdrop-blur-sm animate-in slide-in-from-right duration-500">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#f7e4a1] to-transparent"></div>
+            
+            <div className="mb-10 space-y-4">
+              <h3 className="text-[#D4AF37] text-xs uppercase tracking-[0.4em] font-semibold">Bước 1: Trang phục</h3>
+              <h2 className="text-2xl md:text-3xl italic leading-relaxed font-light text-white">
+                "Hôm đó em muốn mình trông như thế nào?"
+              </h2>
+            </div>
+            
+            <div className="space-y-4">
+              <button onClick={() => setStep(2)} className="w-full group relative p-5 bg-[#1a1a1a] border border-[#D4AF37]/40 rounded-xl hover:border-[#f7e4a1] transition-all duration-500">
+                <div className="flex flex-col items-start gap-1">
+                  <div className="flex items-center gap-2 text-[#f7e4a1] font-bold uppercase tracking-widest text-xs"><Sparkles size={14}/> Lộng lẫy</div>
+                  <span className="text-lg text-white/90 italic">Mặc siuuu đẹp ❤️</span>
+                </div>
+                <ChevronRight size={24} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#f7e4a1] opacity-0 group-hover:opacity-100 transition-all" />
+              </button>
+
+              <button onClick={() => setStep(2)} className="w-full group relative p-5 bg-[#1a1a1a] border border-[#D4AF37]/40 rounded-xl hover:border-[#f7e4a1] transition-all duration-500">
+                <div className="flex flex-col items-start gap-1">
+                  <div className="flex items-center gap-2 text-[#f7e4a1] font-bold uppercase tracking-widest text-xs"><Shirt size={14}/> Nhẹ nhàng</div>
+                  <span className="text-lg text-white/90 italic">Đẹp mà vẫn thoải mái ✨</span>
+                </div>
+                <ChevronRight size={24} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#f7e4a1] opacity-0 group-hover:opacity-100 transition-all" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Step 2: Food Selection */}
+        {step === 2 && (
+          <div className="relative bg-[#111111] border border-[#D4AF37]/50 rounded-2xl overflow-hidden shadow-[0_0_60px_rgba(212,175,55,0.2)] p-10 text-center animate-in slide-in-from-right duration-500">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#f7e4a1] to-transparent"></div>
+            
+            <div className="mb-10 space-y-4">
+              <h3 className="text-[#D4AF37] text-xs uppercase tracking-[0.4em] font-semibold">Bước 2: Ẩm thực</h3>
+              <h2 className="text-2xl md:text-3xl italic leading-relaxed font-light text-white">
+                "Khẩu vị của em tối hôm đó thì sao?"
+              </h2>
+            </div>
+            
+            <div className="space-y-4">
+              <button onClick={() => { setChoice(locations.superFull); setStep(3); }} className="w-full group relative p-5 bg-[#1a1a1a] border border-[#D4AF37]/40 rounded-xl hover:border-[#f7e4a1] transition-all duration-500">
+                <div className="flex flex-col items-start gap-1">
+                  <div className="flex items-center gap-2 text-[#f7e4a1] font-bold uppercase tracking-widest text-xs"><UtensilsCrossed size={14}/> Buffet</div>
+                  <span className="text-lg text-white/90 italic">Ăn siu no ❤️</span>
+                </div>
+                <ChevronRight size={24} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#f7e4a1] opacity-0 group-hover:opacity-100 transition-all" />
+              </button>
+
+              <button onClick={() => { setChoice(locations.justEnough); setStep(3); }} className="w-full group relative p-5 bg-[#1a1a1a] border border-[#D4AF37]/40 rounded-xl hover:border-[#f7e4a1] transition-all duration-500">
+                <div className="flex flex-col items-start gap-1">
+                  <div className="flex items-center gap-2 text-[#f7e4a1] font-bold uppercase tracking-widest text-xs"><Flower size={14}/> Fine Dining</div>
+                  <span className="text-lg text-white/90 italic">Ăn zừa zừa ✨</span>
+                </div>
+                <ChevronRight size={24} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#f7e4a1] opacity-0 group-hover:opacity-100 transition-all" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Step 3: Final Card Screen */}
+        {step === 3 && (
+          <div className="relative animate-in zoom-in duration-1000">
+            <div className="absolute -inset-1 bg-gradient-to-r from-[#D4AF37] via-[#f7e4a1] to-[#D4AF37] rounded-3xl blur-md opacity-40"></div>
+            <div className="relative bg-[#111111] border border-[#D4AF37]/40 rounded-2xl overflow-hidden shadow-2xl p-8 text-center backdrop-blur-sm">
+              <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-[#f7e4a1]/50 rounded-tl-2xl pointer-events-none"></div>
+              <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-[#f7e4a1]/50 rounded-br-2xl pointer-events-none"></div>
+
+              <div className="mb-8 space-y-4">
+                <Heart className="text-[#f7e4a1] fill-[#D4AF37]/40 animate-bounce mx-auto" size={48} />
+                <h1 className="text-4xl md:text-6xl font-light tracking-widest text-[#f7e4a1] italic drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]">Be My Valentine</h1>
+                <div className="h-px w-40 bg-gradient-to-r from-transparent via-[#f7e4a1] to-transparent mx-auto"></div>
+              </div>
+
+              <div className="space-y-6">
+                <p className="text-[#f7e4a1]/80 text-xs uppercase tracking-[0.4em] font-bold">Thư ngỏ gửi tới</p>
+                <h2 className="text-4xl font-bold text-white tracking-wide">Trần Phương Nga</h2>
+
+                <div className="py-8 border-y border-[#D4AF37]/30 space-y-5 bg-[#D4AF37]/5 rounded-sm">
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-center gap-2 text-[#f7e4a1]">
+                      <MapPin size={20} />
+                      <span className="text-2xl font-semibold">{choice.name}</span>
+                    </div>
+                    <p className="text-[11px] text-[#f7e4a1]/60 uppercase tracking-widest">{choice.address}</p>
+                  </div>
+                  
+                  <div className="flex items-center justify-center gap-8 pt-2">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-widest font-bold text-[#D4AF37]">Time</span>
+                      <span className="text-2xl text-white">19:00</span>
+                    </div>
+                    <div className="h-10 w-px bg-[#D4AF37]/40"></div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-widest font-bold text-[#D4AF37]">Date</span>
+                      <span className="text-2xl text-white">12.02.2026</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="pt-4 italic text-[#f7e4a1] font-light leading-relaxed px-6 text-base italic">
+                  "{choice.desc}"
+                </p>
+              </div>
+
+              <div className="mt-10">
+                <button onClick={() => setStep(0)} className="px-8 py-2 border-2 border-[#D4AF37]/50 text-[#f7e4a1] rounded-full text-[11px] uppercase tracking-[0.3em] font-bold hover:bg-[#D4AF37] hover:text-[#111111] transition-all">
+                  Bắt đầu lại
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&display=swap');
+        .font-serif { font-family: 'Playfair Display', serif; }
+        h1 { font-family: 'Great Vibes', cursive !important; }
+      `}</style>
+    </div>
+  );
+};
+
+export default App;
